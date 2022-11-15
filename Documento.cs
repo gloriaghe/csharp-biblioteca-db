@@ -1,5 +1,7 @@
 ﻿public class Documento
 {
+    public int ID { get; set; }
+
     public string Codice { get; set; }
     public string Titolo { get; }
 
@@ -12,8 +14,9 @@
     public int Pagine { get; }
 
 
-    public Documento(string codice, string titolo, string settore, int stato, string scaffale, string nomeautore, int durata, int pagine)
+    public Documento(int Id, string codice, string titolo, string settore, int stato, string scaffale, string nomeautore, int durata, int pagine)
     {
+        this.ID = Id;
         this.Codice = codice;
         this.Titolo = titolo;
         //this.Anno = anno;

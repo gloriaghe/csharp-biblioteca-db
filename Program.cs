@@ -20,6 +20,31 @@ try
 
     connessioneSql.Open();
     SqlCommand insertCommand = null;
+    if (sceltaUser == 1)
+    {
+        Console.WriteLine("Che libro vuoi cercare?");
+        string titolo = Console.ReadLine();
+        string query = "SELECT * FROM documento where titolo=@Titolo";
+
+        SqlCommand cmd = new SqlCommand(query, connessioneSql);
+        cmd.Parameters.Add(new SqlParameter("@Titolo", titolo));
+
+        SqlDataReader reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            Console.WriteLine("Id: " + reader.GetString(1));
+            Console.WriteLine("Codice: " + reader.GetString(1));
+            Console.WriteLine("Titolo: " + reader.GetString(2));
+            string disponibilità = reader.GetString(6);
+            if (disponibilità == "0")
+                Console.WriteLine("Libro non Disponibile");
+            else
+                Console.WriteLine("Libro Disponibile");
+
+            Console.WriteLine("Autore: " + reader.GetString(7));
+
+        }
+    }
     if (sceltaUser == 2)
     {
 
@@ -31,7 +56,9 @@ try
         insertCommand.Parameters.Add(new SqlParameter("@dataFine", today.AddMonths(1)));
         insertCommand.Parameters.Add(new SqlParameter("@id_documento", "5"));
         insertCommand.Parameters.Add(new SqlParameter("@utente", "Gloria Gherardi"));
-        
+
+        int affectedRows = insertCommand.ExecuteNonQuery();
+
     }
     if (sceltaUser == 4)
     {
@@ -52,9 +79,9 @@ try
         insertCommand.Parameters.Add(new SqlParameter("@durata_minuti", "NULL"));
         insertCommand.Parameters.Add(new SqlParameter("@pagine", "NULL"));
 
+        int affectedRows = insertCommand.ExecuteNonQuery();
     }
 
-    int affectedRows = insertCommand.ExecuteNonQuery();
 
 }
 catch (Exception e)
@@ -74,63 +101,6 @@ return;
 
 
 
-
-
-//if (sceltaUser == 1)
-//{
-
-//    Console.WriteLine("Premi 1 per cercare per codice");
-//    Console.WriteLine("Premi 2 per cercare per titolo");
-//    sceltaUser = Convert.ToInt32(Console.ReadLine());
-
-//    if (sceltaUser == 1)
-//    {
-//        Console.WriteLine("Inserisci il codice");
-//        string codiceRicerca = Console.ReadLine();
-
-//        biblioteca.Search(sceltaUser, codiceRicerca);
-//    }
-//    else if (sceltaUser == 2)
-//    {
-//        Console.Clear();
-//        Console.WriteLine("Inserisci il titolo");
-//        string titoloRicerca = Console.ReadLine();
-//        biblioteca.Search(sceltaUser, titoloRicerca);
-//    }
-//    else
-//    {
-//        Console.WriteLine("Errore ricerca");
-//    }
-//}
-////else if (sceltaUser == 2)
-////{
-////    Console.Clear();
-////    Console.WriteLine("Inserisci periodo da cui parte il prestito");
-////    string inizioPrestito = Console.ReadLine();
-////    Console.WriteLine("Inserisci periodo in cui finisce il prestito");
-////    string finePrestito = Console.ReadLine();
-////    Console.WriteLine("Titolo del documento da prenotare?");
-////    string titoloRicerca = Console.ReadLine();
-////    //Documento documentoPrestito = new Documento("", "", 0, "", "", "", "", "");
-////    Documento documentoPrestito = null;
-
-////    bool presente = true;
-
-////    biblioteca.Prestiti(inizioPrestito, finePrestito, titoloRicerca, documentoPrestito, presente);
-////}
-////else if (sceltaUser == 3)
-////{
-////    Console.Clear();
-////    Console.WriteLine("Inserisci il nome di chi devo cercare il prestito");
-////    string nome = Console.ReadLine();
-////    Console.WriteLine("Inserisci il cognome di chi devo cercare il prestito");
-////    string cognome = Console.ReadLine();
-////    biblioteca.SearchPrestito(nome, cognome);
-////}
-//else
-//{
-//    Console.WriteLine("Scelta errata");
-//}
 
 
 //public class Documento
@@ -183,86 +153,3 @@ return;
 
 //}
 
-//public class Biblioteca
-//{
-
-
-//    public void Search(int ricerca, string userSearch)
-//    {
-
-//            if (ricerca == 1)
-//            {
-//                if (item.Codice == userSearch)
-//                    Console.WriteLine("Trovato {1}: {0} ", item, item.GetType().ToString());
-//            }
-//            else if (ricerca == 2)
-//            {
-//                if (item.Titolo == userSearch)
-//                    Console.WriteLine("Trovato {1}: {0} ", item, item.GetType().ToString());
-//            }
-
-//    }
-
-//    //public void Prestiti(string inizioPrestito, string finePrestito, string titoloRicerca, Documento documentoPrestito, bool presente)
-//    //{
-//    //    bool nonTrovato = false;
-//    //    foreach (Documento item in documenti)
-//    //    {
-
-
-//    //        if (item.Titolo == titoloRicerca)
-//    //        {
-//    //            Console.WriteLine("Trovato {1}: {0} ", item, item.GetType().ToString());
-//    //            documentoPrestito = item;
-//    //            nonTrovato = true;
-
-//    //            if (item.Stato == "In prestito")
-//    //            {
-//    //                Console.Clear();
-//    //                Console.WriteLine("Il documento non è al momento disponibile!");
-//    //                presente = false;
-//    //            }
-//    //        }
-//    //    }
-//    //    //se documento non trovato
-//    //    if (nonTrovato == false)
-//    //    {
-//    //        Console.Clear();
-//    //        Console.WriteLine("Documento non trovato!");
-//    //    }
-//    //    //se presente in biblioteca
-//    //    if (presente == true)
-//    //    {
-//    //        Console.WriteLine("Inserisci il nome di chi devo effettuare il prestito");
-//    //        string nome = Console.ReadLine();
-//    //        Console.WriteLine("Inserisci il cognome");
-//    //        string cognome = Console.ReadLine();
-
-//    //        foreach (Utente item in utenti)
-//    //        {
-//    //            if (item.Nome == nome && item.Cognome == cognome)
-//    //            {
-
-//    //                Utente utente = item;
-//    //                Prestito prestito = new Prestito(inizioPrestito, finePrestito, documentoPrestito, utente);
-//    //                Console.WriteLine("Inserito {1}: {0} ", prestito, prestito.GetType().ToString());
-//    //                prestiti.Add(prestito);
-//    //            }
-//    //        }
-
-//    //    }
-
-//    //}
-
-//    //public void SearchPrestito(string nome, string cognome)
-//    //{
-//    //    foreach (Prestito item in prestiti)
-//    //    {
-//    //        if (item.Utente.Nome == nome && item.Utente.Cognome == cognome)
-//    //        {
-//    //            Console.WriteLine("Trovato {1}: {0} ", item, item.GetType().ToString());
-//    //        }
-
-//    //    }
-//    //}
-//}

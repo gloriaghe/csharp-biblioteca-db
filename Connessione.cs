@@ -26,7 +26,7 @@ public class Connessione
                 string codice = reader.GetString(1);
                 string titoloLibro = reader.GetString(2);
                 string settore = reader.GetString(4);
-                //int stato = reader.GetInt32(5);
+                bool stato = reader.GetBoolean(5);
                 string scaffale = reader.GetString(6);
                 string nomeautore = reader.GetString(7);
                 //int durata = reader.GetInt32(8);
@@ -42,7 +42,7 @@ public class Connessione
                     Console.WriteLine("Libro Disponibile");
 
                 Console.WriteLine("Autore: " + reader.GetString(7));
-                return new Documento( id,  codice,  titoloLibro,  settore,  1,  scaffale,  nomeautore,  0,  0);
+                return new Documento( id,  codice,  titoloLibro,  settore,  stato,  scaffale,  nomeautore,  0,  0);
             }
         }
         catch (Exception e)

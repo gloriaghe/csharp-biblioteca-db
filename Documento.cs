@@ -7,14 +7,14 @@
 
     public int Anno { get; set; }
     public string Settore { get; }
-    public int Stato { get; set; }
+    public bool Stato { get; set; }
     public string Scaffale { get; set; }
     public string NomeAutore { get; }
     public int Durata { get; }
     public int Pagine { get; }
 
 
-    public Documento(int Id, string codice, string titolo, string settore, int stato, string scaffale, string nomeautore, int durata, int pagine)
+    public Documento(int Id, string codice, string titolo, string settore, bool stato, string scaffale, string nomeautore, int durata, int pagine)
     {
         this.ID = Id;
         this.Codice = codice;
